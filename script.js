@@ -7,6 +7,13 @@ const tabPanels = document.querySelectorAll(".tab-panel");
 const contactForm = document.getElementById("contactForm");
 const formSuccess = document.querySelector(".form-success");
 
+const closeMobileMenu = () => {
+  burger?.classList.remove("is-open");
+  burger?.setAttribute("aria-expanded", "false");
+  if (mobileMenu) mobileMenu.hidden = true;
+  document.body.style.overflow = "";
+};
+
 burger?.addEventListener("click", () => {
   const isOpen = burger.classList.toggle("is-open");
   burger.setAttribute("aria-expanded", String(isOpen));
@@ -15,12 +22,7 @@ burger?.addEventListener("click", () => {
 });
 
 mobileMenu?.querySelectorAll("a").forEach((link) => {
-  link.addEventListener("click", () => {
-    burger.classList.remove("is-open");
-    burger.setAttribute("aria-expanded", "false");
-    mobileMenu.hidden = true;
-    document.body.style.overflow = "";
-  });
+  link.addEventListener("click", closeMobileMenu);
 });
 
 const revealObserver = new IntersectionObserver(
@@ -37,20 +39,35 @@ const revealObserver = new IntersectionObserver(
 
 revealItems.forEach((item) => revealObserver.observe(item));
 
+const switchPricingTab = (tab) => {
+  if (!tab) return;
+
+  tabButtons.forEach((btn) => {
+    const isActive = btn.dataset.tab === tab;
+    btn.classList.toggle("is-active", isActive);
+    btn.setAttribute("aria-selected", String(isActive));
+  });
+
+  tabPanels.forEach((panel) => {
+    const isActive = panel.dataset.panel === tab;
+    panel.classList.toggle("is-active", isActive);
+    panel.hidden = !isActive;
+  });
+};
+
 tabButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    const tab = button.dataset.tab;
+    switchPricingTab(button.dataset.tab);
+  });
+});
 
-    tabButtons.forEach((btn) => {
-      btn.classList.toggle("is-active", btn === button);
-      btn.setAttribute("aria-selected", String(btn === button));
-    });
+document.querySelectorAll(".capability-services__item").forEach((item) => {
+  item.addEventListener("click", () => {
+    const tab = item.dataset.tab;
+    if (!tab) return;
 
-    tabPanels.forEach((panel) => {
-      const isActive = panel.dataset.panel === tab;
-      panel.classList.toggle("is-active", isActive);
-      panel.hidden = !isActive;
-    });
+    switchPricingTab(tab);
+    document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth", block: "start" });
   });
 });
 
@@ -76,9 +93,18 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
   anchor.addEventListener("click", (event) => {
     const id = anchor.getAttribute("href");
     if (!id || id === "#") return;
+
+    if (id === "#top") {
+      event.preventDefault();
+      closeMobileMenu();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
     const target = document.querySelector(id);
     if (!target) return;
     event.preventDefault();
+    closeMobileMenu();
     target.scrollIntoView({ behavior: "smooth", block: "start" });
   });
 });
@@ -94,19 +120,15 @@ const initCustomCursor = () => {
   const amount = 16;
   const sineDots = 5;
   const dotSize = 24;
+  const trailRadius = dotSize / 2;
+  const trailOffsetX = trailRadius * Math.SQRT1_2;
+  const trailOffsetY = trailRadius * Math.SQRT1_2;
   const idleDelay = 150;
 
   const cursor = document.createElement("div");
   cursor.className = "site-cursor";
   cursor.setAttribute("aria-hidden", "true");
   document.body.appendChild(cursor);
-
-  const icon = document.createElement("img");
-  icon.className = "site-cursor__icon";
-  icon.src = "assets/brand/arrow-white.svg";
-  icon.alt = "";
-  icon.draggable = false;
-  cursor.appendChild(icon);
 
   const trail = document.createElement("div");
   trail.className = "site-cursor__trail";
@@ -176,10 +198,8 @@ const initCustomCursor = () => {
   window.addEventListener("mousemove", (event) => onMove(event.clientX, event.clientY));
 
   const render = () => {
-    icon.style.transform = `translate3d(${pointerX}px, ${pointerY}px, 0)`;
-
-    let x = pointerX - dotSize / 2;
-    let y = pointerY - dotSize / 2;
+    let x = pointerX + trailOffsetX;
+    let y = pointerY + trailOffsetY;
 
     dots.forEach((dot, index) => {
       const follow = 0.34 - index * 0.008;
@@ -224,3 +244,27 @@ const initCustomCursor = () => {
 };
 
 initCustomCursor();
+
+const productionVideo = document.querySelector(".section-video-strip__player");
+
+if (productionVideo) {
+  const playVideo = () => {
+    productionVideo.muted = true;
+    productionVideo.play().catch(() => {});
+  };
+
+  const videoObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          playVideo();
+        } else {
+          productionVideo.pause();
+        }
+      });
+    },
+    { threshold: 0.35 }
+  );
+
+  videoObserver.observe(productionVideo);
+}
