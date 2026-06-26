@@ -414,6 +414,10 @@ main,
   background: var(--bg-alt);
 }
 
+.section--contact {
+  padding-bottom: 0;
+}
+
 .section-head {
   display: grid;
   grid-template-columns: 120px 1fr;
@@ -1265,15 +1269,18 @@ main,
   border: 1px solid var(--green-line);
 }
 
+.contact-details-band {
+  margin-top: 48px;
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+}
+
 .contact-details {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 40px;
   align-items: start;
-  margin-top: 48px;
-  padding: 32px 40px;
-  background: var(--surface);
-  border: 1px solid var(--line);
+  padding: 32px 0;
 }
 
 .contact-details__list {
@@ -1502,7 +1509,7 @@ main,
 
 @media (max-width: 768px) {
   .contact-details {
-    padding: 24px 20px;
+    padding: 24px 0;
   }
 
   .contact-form {
