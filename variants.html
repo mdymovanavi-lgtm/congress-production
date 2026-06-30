@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Конгресс — выбор варианта дизайна</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Inter", system-ui, sans-serif;
+      background: #0A0A0A;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+    h1 {
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      font-weight: 800;
+      text-align: center;
+      margin: 0 0 8px;
+      letter-spacing: -0.02em;
+    }
+    p.sub {
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      margin: 0 0 48px;
+      font-size: 15px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      width: min(960px, 100%);
+    }
+    @media (min-width: 768px) {
+      .grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    .card {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 28px;
+      border: 2px solid rgba(255,255,255,0.15);
+      border-radius: 20px;
+      background: rgba(255,255,255,0.04);
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s, border-color 0.2s, background 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255,255,255,0.4);
+      background: rgba(255,255,255,0.08);
+    }
+    .card__num {
+      font-size: 12px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .card__title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      margin: 0;
+    }
+    .card__desc {
+      font-size: 14px;
+      color: rgba(255,255,255,0.55);
+      margin: 0;
+      flex: 1;
+      line-height: 1.5;
+    }
+    .card__tag {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      width: fit-content;
+    }
+    .card--original .card__tag { background: #015A45; }
+    .card--bento .card__tag { background: #334155; }
+    .card--v3 .card__tag { background: #FF6CA1; }
+    .card--bento:hover { border-color: #334155; }
+    .card--v3:hover { border-color: #FF6CA1; }
+    .card--original:hover { border-color: #015A45; }
+    .logo { margin-bottom: 32px; opacity: 0.9; }
+  </style>
+</head>
+<body>
+  <img class="logo" src="assets/brand/logo-white.svg" alt="Конгресс" width="160" height="29">
+  <h1>3 варианта сайта производства</h1>
+  <p class="sub">UI Pro Max + MCP Magic · выберите вариант для просмотра</p>
+
+  <div class="grid">
+    <a href="index.html" class="card card--original">
+      <span class="card__num">Вариант 1</span>
+      <h2 class="card__title">Текущий</h2>
+      <p class="card__desc">Оригинальный дизайн: типографика Roboto Condensed, стикер в hero, кастомный курсор, видео-шторка в блоке мощностей.</p>
+      <span class="card__tag">Оригинал</span>
+    </a>
+
+    <a href="index-bento.html" class="card card--bento">
+      <span class="card__num">Вариант 2</span>
+      <h2 class="card__title">Bento Box</h2>
+      <p class="card__desc">Модульная сетка карточек: hero, метрики, видео и услуги в bento-grid. Шрифты Outfit + DM Sans, скругления 24px.</p>
+      <span class="card__tag">Bento Grid</span>
+    </a>
+
+    <a href="index-vseti.html" class="card card--v3">
+      <span class="card__num">Вариант 3</span>
+      <h2 class="card__title">V3</h2>
+      <p class="card__desc">Полноэкранный hero, стек статистики, фильтр-чипы, карточки услуг и сетка процесса — все 6 шагов видны сразу.</p>
+      <span class="card__tag">V3</span>
+    </a>
+  </div>
+</body>
+</html>
