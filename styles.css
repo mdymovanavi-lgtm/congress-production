@@ -140,6 +140,8 @@ button, input, textarea { font: inherit; cursor: pointer; }
     grid-template-columns: 1fr auto;
   }
   .header__nav { display: none; }
+  .link-arrow { display: none; }
+  .hero__go { display: none; }
 }
 
 /* Hero — 1 экран, oversized type (вписывается в viewport) */
@@ -764,6 +766,10 @@ button, input, textarea { font: inherit; cursor: pointer; }
   grid-template-columns: 1fr;
   gap: 32px;
   align-items: start;
+}
+@media (max-width: 991px) {
+  .contact-form { order: 1; }
+  .contact-aside { order: 2; }
 }
 @media (min-width: 992px) {
   .contact-layout {
