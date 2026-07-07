@@ -141,7 +141,6 @@ button, input, textarea { font: inherit; cursor: pointer; }
   }
   .header__nav { display: none; }
   .link-arrow { display: none; }
-  .hero__go { display: none; }
 }
 
 /* Hero — 1 экран, oversized type (вписывается в viewport) */
@@ -296,6 +295,14 @@ button, input, textarea { font: inherit; cursor: pointer; }
 .hero__go:hover {
   color: var(--text);
   transform: translateY(4px);
+}
+@media (max-width: 767px) {
+  .hero__grid {
+    grid-template-rows: minmax(0, 1fr);
+  }
+  .hero__foot {
+    display: none;
+  }
 }
 
 /* Stats screen — bento grid */
