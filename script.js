@@ -69,22 +69,29 @@ document.addEventListener("DOMContentLoaded", () => {
   const chips = document.querySelectorAll(".chip");
   const cards = document.querySelectorAll(".channel-card");
 
+  const applyFilter = (filter) => {
+    if (!filter) return;
+    cards.forEach((card) => {
+      const categories = card.dataset.category?.split(" ") || [];
+      card.classList.toggle("is-hidden", !categories.includes(filter));
+    });
+  };
+
   chips.forEach((chip) => {
     chip.addEventListener("click", () => {
       const filter = chip.dataset.filter;
+      if (!filter) return;
 
       chips.forEach((c) => {
         c.classList.toggle("is-active", c === chip);
         c.setAttribute("aria-selected", String(c === chip));
       });
 
-      cards.forEach((card) => {
-        const categories = card.dataset.category?.split(" ") || [];
-        const show = filter === "all" || categories.includes(filter);
-        card.classList.toggle("is-hidden", !show);
-      });
+      applyFilter(filter);
     });
   });
+
+  applyFilter(document.querySelector(".chip.is-active")?.dataset.filter || "print");
 
   const statCards = document.querySelectorAll(".stat-card");
   const statsScreen = document.getElementById("stats");
